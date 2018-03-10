@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>hwtemplate.html</title>
+    <style>
+
+
+
+h1 { font-size:17pt; text-align:center; color:black; }
+h2 { font-size:14pt; text-align:left; color:black; }
+h3 { font-size:11pt; text-align:left; color:black; }
+
+a { text-decoration:none; color:#3284bf; }
+a:hover { text-decoration:underline; }
+/* { background-color:#3284bf; color:white; } */
+
+.fat { background-color:black; height:4px; }
+
+hr { background-color:black; height:1px; }
+
+li { margin-top: 1em; }
+
+.notice { background-color:white; font-size:10pt; border:solid black 5px; }
+
+caption { color:brown; text-decoration:underline; font-size:9pt; }
+td { padding-left:1em; padding-right:1em; }
+th { text-decoration:underline }
+table { margin-left:2em; }
+
+.boxright { margin-right:0; background-color:white; float:right; padding:20px; font-size:large; vertical-align:top; }
+
+.big { line-height:3; font-size:large; font-weight:bolder; font-family:sans-serif;margin-top:12pt }
+dt.hili { font-size:large; font-family:Cursive; display:inline; text-decoration:underline; padding-top:1em; }
+.smallbold { font-size:small; font-family:Cursive; display:inline; font-weight:bold; }
+dd { margin-bottom:1ex }
+
+td.hili { font-size:x-large; font-family:cursive; margin:20px; vertical-align:top }
+
+.smallnobox { width:400pt; font-size:smaller; margin:10px; }
+.smallbox { font-size:smaller; margin:10px; border:solid black 1px; }
+
+.boxquote {float: left; text-align: center; border: solid black 1px;font-family: Times, sans-serif; font-size: 12pt; margin: 10px;}
+
+.googler { vertical-align:bottom; color:green; font-size:x-large}
+
+.small { font-size:smaller; }
+.right { text-align:right; }
+
+body { font-family: 'Oxygen', Verdana, serif; margin:2em; background-color: #F0F0F0; }
+
+.explain { font-size:smaller; margin-left:40px; margin-right:40px; margin-bottom:10px; }
+
+
+summary::-webkit-details-marker {
+    color: #00ACF3;
+    font-size: 125%;
+    margin-right: 2px;
+}
+
+summary:focus {	outline-style: none; }
+article { margin-left:1em; }
+article > details > summary { font-size: 28px; margin-top: 32px; }
+article > details > .link { font-size: 28px; margin-top: 32px; text-decoration:underine; }
+details > p { margin-left: 36px; background-color:#f0f0f0; }
+details > div { margin-left: 36px; background-color:#f0f0f0; }
+
+details details { margin-left: 48px; }
+details details summary { font-size: 16px; }
+
+    </style>
+  </head>
+
+  <meta name="KEYWORDS" content="..." />
+  <meta name="AUTHOR" content="You" />
+
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="hw.css" />
+  
+
+  <body>
+
+    <h1> Homework 2, by Jeremy Watkins, Jan 27, 2018 </h1>
+
+    <h2> Executive Summary </h2>
+
+    <p> This project investigates how stocks perform when they are paying a dividend.  This is measured by looking at daily returns in excess of S&P500 returns 20 trading days prior and 20 trading days after a stock dividend is paid.</p>
+
+    <h2> Excess Returns Around Dividend Distributions </h2>
+
+	  <p>WRDS was used to query the datasets required for these calculations.  The stock univers used only included S&P500 stocks.  The calendar years 2011-2016 were used.  The CRSP DSP500LIST dataset was used to aquire the crsp permno associated with all stocks that are a part of the S&P500.  The CRSP DSE data set was used to find all dividend distribution events in the selected time period.  The CRSP DSP500 dataset was used to find the S&P500 returns. Lastly, The CRSP DSF dataset was used to find the daily stock returns around dividend distribution events.  
+	  <br />  My code used a for loop to iterate through the DSE data that has all stock distribution events.  It then checks if the stock is within the S&P500 universe and if it is then it will continue with calculation of excess returns around the distribution event.  If not, it continue to the next entry.  To calculate the excess returns the daily returns for that specific stock is queried and then the daily returns of the S&P500 is subtracted from the stock daily returns for the 41 day period between 20 days before the distribution and 20 days after the distribution.
+		  <br /> Overall the stocks outperformed the S&P500 for the entire period with an average excess daily return of .07%.  Also,  the stock performed better in the 20 days after the distribution instead of the 20 days prior to the distribution.  The average excess daily return before distribution was .04% and the average excess daily returns after distribution was .1%.  </p>
+
+    <h2> Plot Summarizing Results </h2>
+	<IMG SRC="data:image/png;base64,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" ALT="some text" WIDTH=861 HEIGHT=422>
+    
+
+    <h2> Computer Code </h2>
+
+    <pre>
+library(rJava)
+options(java.parameters = '-Xmx4g')
+library(RJDBC)
+sasCore <- paste0(sasPath, "/sas.core.jar")
+sasDriver <- paste0(sasPath, "/sas.intrnet.javatools.jar")
+.jinit()
+.jaddClassPath(c(sasCore, sasDriver))
+driver <- RJDBC::JDBC("com.sas.net.sharenet.ShareNetDriver", sasDriver, identifier.quote = "`")
+wrds <- RJDBC::dbConnect(driver, "jdbc:sharenet://wrds-cloud.wharton.upenn.edu:8551/", username, password)
+
+#query permno of all sp500 stocks 
+sql <- "SELECT PERMNO from CRSPQ.DSP500LIST where start <= '01jan2015'd and ending >='31dec2015'd"
+res <- dbSendQuery(wrds, sql)
+SP500 <- fetch(res, n = -1)
+
+#query stocks paying div
+sql <- "SELECT PERMNO,DATE from CRSPQ.DSE where DATE >= '01jan2015'd and DATE <= '31dec2015'd and EVENT = 'DIST'"
+res <- dbSendQuery(wrds, sql)
+stock_div <- fetch(res, n = -1)
+
+sp500_data <- fetch(res, n = -1)
+
+
+
+library(zoo)
+library(xts)
+library(lubridate)
+
+sp500_data_index<-ymd(sp500_data[,1])
+
+#extract sp500  return
+sql <- "SELECT caldt, vwretd from CRSPQ.DSP500 where caldt between '01dec2014'd and '31jan2016'd"
+res <- dbSendQuery(wrds, sql)
+sp500_data=cbind(row_num=rownames(sp500_data),sp500_data)
+rownames(sp500_data)<-sp500_data_index
+sp500_data[,2]<-NULL
+sp500_datats<-as.xts(sp500_data)
+sp500_data$row_num=as.numeric(sp500_data$row_num)
+
+excess_returns=c()
+#permno<-unique(stock_div[1])
+row=19
+col=1
+ex_ret=data.frame(row.names=1:41)
+#10104
+for (row in 1:nrow(stock_div)) {
+  
+  if (stock_div[row,1] %in% SP500[,1]==TRUE){
+    print(row)
+    div_date=stock_div[row,2]
+    permno=stock_div[row,1]
+    
+    #stock select from permno
+    sql <- "SELECT DATE, ret from CRSPQ.DSF where PERMNO="
+    sql =  paste(sql,as.character(permno),sep='')
+    res <- dbSendQuery(wrds, sql)
+    stock_data <- fetch(res, n = -1)
+    
+    #select +-20days around stock div paydate
+    stock_data_index<-ymd(stock_data[,1])
+    stock_data=cbind(row_num=rownames(stock_data),stock_data)
+    rownames(stock_data)<-stock_data_index
+    stock_data[,2]<-NULL
+    stock_datats<-as.xts(stock_data)
+    div_date2=as.Date(div_date)
+    stock_div_row=as.numeric(stock_datats[div_date2][1,1])
+    stock_data$row_num=as.numeric(stock_data$row_num)
+    stock_slice=subset(stock_data,row_num<=stock_div_row+20 & row_num>=stock_div_row-20)
+  
+    #select +-20days around sp div paydate
+    sp500_div_row=as.numeric(sp500_datats[div_date2][1,1])
+    sp500_slice=subset(sp500_data,row_num<=sp500_div_row+20 & row_num>=sp500_div_row-20)
+    #sp500_slice=sp500_datats[paste(div_date2-20,div_date2+20,sep='::')]
+  
+    if (nrow(stock_slice)==nrow(sp500_slice)){
+      excess=stock_slice[,2]-sp500_slice[,2]
+      ex_ret=cbind(ex_ret,excess)
+      }
+  }
+}
+excess_avg_return=rowMeans(ex_ret,na.rm=TRUE)
+x=c(-20:20)
+
+plot(x,excess_avg_return, main="Average Excess Returns vs Days Away from Stock Dividend Payment", 
+      xlab="Days", ylab="Average Excess Return")
+
+    </pre>
+
+    <h2> References </h2>
+
+    <ul>
+      <li> <a href="https://wrds-web.wharton.upenn.edu/wrds/tools/variable.cfm?library_id=137&file_id=67002">CRSP DSP500</a>, WRDS, retrieved on Jan 26, 2018. </li>
+      <li> <a href="https://wrds-web.wharton.upenn.edu/wrds/tools/variable.cfm?library_id=137&file_id=67053">CRSP DSE</a>, WRDS, retrieved on Jan 26, 2018. </li>
+		      <li> <a href="https://wrds-web.wharton.upenn.edu/wrds/tools/variable.cfm?library_id=137&file_id=67003">CRSP DSP500LIST</a>, WRDS, retrieved on Jan 26, 2018. </li>
+		      <li> <a href="https://wrds-web.wharton.upenn.edu/wrds/tools/variable.cfm?library_id=137&file_id=67061">CRSP DSF</a>, WRDS, retrieved on Jan 26, 2018. </li>
+    </ul>
+
+    
+
+  </body>
+
+</html>
